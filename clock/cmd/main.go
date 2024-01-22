@@ -57,24 +57,6 @@ func main() {
 		case "Exit":
 			fmt.Println("Exiting the CLI...")
 			os.Exit(0)
-		case "Pomodoro":
-			pomodoro := pkg.NewPomodoro(25*time.Minute, 5*time.Minute)
-			pomodoro.Start()
-
-			fmt.Println("Press 'q' to quit")
-			reader := bufio.NewReader(os.Stdin)
-			for {
-				char, _, err := reader.ReadRune()
-				if err != nil {
-					fmt.Println(err)
-					return
-				}
-
-				if char == 'q' {
-					pomodoro.Stop()
-					return
-				}
-			}
 		default:
 			fmt.Println("Please choose a utility to run.")
 		}
