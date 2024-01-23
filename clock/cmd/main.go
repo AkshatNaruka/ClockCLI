@@ -12,7 +12,7 @@ import (
 func main() {
 	prompt := promptui.Select{
 		Label: "Select Utility",
-		Items: []string{"Clock", "Stopwatch", "Alarm", "Time Zone","Exit"},
+		Items: []string{"Clock", "Stopwatch", "Alarm", "Time Zone","Calendar","Exit"},
 	}
 
 	for {
@@ -85,7 +85,8 @@ func main() {
 			default:
 				fmt.Println("Invalid option. Please choose 1 or 2.")
 			}
-
+		case "Calendar":
+			pkg.DisplayCalendar()
 		case "Exit":
 			fmt.Println("Exiting the CLI...")
 			os.Exit(0)
