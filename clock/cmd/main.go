@@ -12,7 +12,7 @@ import (
 func main() {
 	prompt := promptui.Select{
 		Label: "Select Utility",
-		Items: []string{"Clock", "Stopwatch", "Alarm", "Exit"},
+		Items: []string{"Clock", "Stopwatch", "Alarm", "Time Zone","Exit"},
 	}
 
 	for {
@@ -54,6 +54,38 @@ func main() {
 					break
 				}
 			}
+		case "Time Zone":
+			fmt.Println("Time Zone Utility:")
+			fmt.Println("1. Display Current Time")
+			fmt.Println("2. Convert Time")
+			fmt.Println("Press 'q' to quit")
+		
+			var option int
+			fmt.Scan(&option)
+		
+			switch option {
+			case 1:
+				go pkg.DisplayTime()
+				fmt.Println("Press 'q' to quit")
+				reader := bufio.NewReader(os.Stdin)
+				for {
+					char, _, err := reader.ReadRune()
+					if err != nil {
+						fmt.Println(err)
+						return
+					}
+		
+					if char == 'q' {
+						pkg.StopDisplayTime() // Stop the dynamic display of time when 'q' is pressed
+						break
+					}
+				}
+			case 2:
+				pkg.ConvertTime()
+			default:
+				fmt.Println("Invalid option. Please choose 1 or 2.")
+			}
+
 		case "Exit":
 			fmt.Println("Exiting the CLI...")
 			os.Exit(0)
