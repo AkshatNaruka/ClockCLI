@@ -9,8 +9,10 @@ import (
 
 // Stopwatch struct
 type Stopwatch struct {
-	start time.Time
-	quit  chan bool
+	start    time.Time
+	lastLap  time.Time
+	lapCount int
+	quit     chan bool
 }
 
 // NewStopwatch creates a new Stopwatch
@@ -21,6 +23,7 @@ func NewStopwatch() *Stopwatch {
 // Start starts the stopwatch
 func (s *Stopwatch) Start() {
 	s.start = time.Now()
+	s.lastLap = s.start // Initialize lastLap with the start time
 
 	go func() {
 		reader := bufio.NewReader(os.Stdin)
@@ -34,6 +37,8 @@ func (s *Stopwatch) Start() {
 			if char == 'q' {
 				s.quit <- true
 				return
+			} else if char == '\n' {
+				s.recordLap()
 			}
 		}
 	}()
@@ -52,4 +57,14 @@ func (s *Stopwatch) Start() {
 			time.Sleep(1 * time.Second)
 		}
 	}
+}
+
+func (s *Stopwatch) recordLap() {
+	s.lapCount++
+	elapsedSinceLastLap := time.Since(s.lastLap)
+	hours := int(elapsedSinceLastLap.Hours())
+	minutes := int(elapsedSinceLastLap.Minutes()) % 60
+	seconds := int(elapsedSinceLastLap.Seconds()) % 60
+	fmt.Printf("\nLap %d: %02d:%02d:%02d\n", s.lapCount, hours, minutes, seconds)
+	s.lastLap = time.Now()
 }
