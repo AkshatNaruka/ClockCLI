@@ -1,0 +1,57 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: black;
+            color: white;
+            font-size: 100px;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #exitButton {
+            font-family: 'Roboto', sans-serif;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #808080;
+            color: white;
+            border-radius: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="clock" style="font-size: 230px"></div>
+    <button id="exitButton" onclick="exitClock()">Exit</button>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function exitClock() {
+            window.close();
+        }
+
+    </script>
+</body>
+</html>
